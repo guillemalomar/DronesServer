@@ -1,0 +1,84 @@
+{
+    "drones" : [
+        {
+          "serial_number": 1,
+          "name": "my drone 1",
+          "brand": "NIKON",
+          "cameras": "KINONHDULTRA"
+        },
+        {
+          "serial_number": 2,
+          "name": "my drone 2",
+          "brand": "NIKON",
+          "cameras": "CANONFX"
+        },
+        {
+          "serial_number": 3,
+          "name": "my drone 3",
+          "brand": "NIKON",
+          "cameras": "CANONFX, KINONHD"
+        },
+        {
+          "serial_number": 4,
+          "name": "my drone 4",
+          "brand": "NIKON",
+          "cameras": "CANONFX2, KINONHDULTRA"
+        },
+        {
+          "serial_number": 5,
+          "name": "my drone 5",
+          "brand": "KINON",
+          "cameras": "KINONHDULTRA, NIKONHD"
+        },
+        {
+          "serial_number": 6,
+          "name": "my drone 6",
+          "brand": "CANON",
+          "cameras": "CANONFX, NIKONHDwrong"
+        },
+        {
+          "serial_number": 7,
+          "name": "my drone 6",
+          "brand": "CANON",
+          "cameras": "CANONFX, NIKONHDULTRA"
+        },
+        {
+          "serial_number": 8,
+          "name": "blablabla",
+          "brand": "CANON",
+          "cameras": "CANONFX, NIKONHDULTRA, NIKONHD"
+        }
+    ],
+    "cameras": [
+        {
+          "model": "CANONFX",
+          "megapixels": 2.1,
+          "brand": "CANON"
+        },
+        {
+          "model": "CANONFX2",
+          "megapixels": 3.1,
+          "brand": "CANON"
+        },
+        {
+          "model": "NIKONHD",
+          "megapixels": 5.1,
+          "brand": "NIKON"
+        },
+        {
+          "model": "NIKONHDULTRA",
+          "megapixels": 10.1,
+          "brand": "NIKON"
+        },
+        {
+          "model": "KINONHD",
+          "megapixels": 3.1,
+          "brand": "KINON"
+        },
+        {
+          "model": "KINONHDULTRA",
+          "megapixels": 15.1,
+          "brand": "KINON"
+        }
+    ]
+}

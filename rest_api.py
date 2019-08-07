@@ -10,16 +10,17 @@ from DronesAPI.resources.drone import DroneBySerial, DroneByName, Drones, DroneR
                                       DronesBySerialnumber
 from DronesAPI.resources.user import User, UsersByName, UserLogin, Users, UserRegister, UserAdminRegister
 from DronesAPI.tools.logger import set_logger
+from DronesAPI.settings import DATABASE_LOC
+from DronesAPI.creds import APP_SECRET_KEY
 
 
 set_logger()
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///DronesAPI/data/prod_data.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", DATABASE_LOC)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 app.config["PROPAGATE_EXCEPTIONS"] = True
-app.secret_key = "my_s3cr3t_p4ss"
+app.secret_key = APP_SECRET_KEY
 api = Api(app)
 db.init_app(app)
 
@@ -76,14 +77,11 @@ api.add_resource(UserAdminRegister, "/user/adminregister")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(Users, "/users")
 api.add_resource(UsersByName, "/users/sort/name")
-
 api.add_resource(UserLogin, "/login")
-
 api.add_resource(CameraRegister, "/camera/register")
 api.add_resource(Camera, "/camera/<model>")
 api.add_resource(Cameras, "/cameras")
 api.add_resource(CamerasByModel, "/cameras/sort/model")
-
 api.add_resource(DroneRegister, "/drone/register")
 api.add_resource(DroneBySerial, "/drone/serial/<int:serial_number>")
 api.add_resource(DroneByName, "/drone/name/<name>")

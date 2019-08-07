@@ -13,33 +13,52 @@ class CameraModel(db.Model):
         self.brand = brand
 
     def json(self):
+        """
+        This method returns a dict containing the object data, to be returned easily
+        """
         return {
             "model": self.model,
             "megapixels": self.megapixels,
             "brand": self.brand
         }
 
-    # Method to save camera to DB
     def save_to_db(self):
+        """
+        Method to save camera to DB
+        """
         db.session.add(self)
         db.session.commit()
 
-    # Method to remove camera from DB
     def remove_from_db(self):
+        """
+        Method to remove camera from DB
+        """
         db.session.delete(self)
         db.session.commit()
 
-    # Class method which finds camera from DB by model
     @classmethod
     def find_camera_by_model(cls, model):
+        """
+        Class method which finds camera from DB by model
+        :param model: camera model
+        :return: single db entry
+        """
         return cls.query.filter_by(model=model).first()
 
     # Class method which finds all cameras from DB
     @classmethod
     def find_all_cameras(cls):
+        """
+        Class method which finds all cameras from DB
+        :return: list of db entries
+        """
         return cls.query.all()
 
-    # Class method which finds all cameras from DB and sorts them by model
+    #
     @classmethod
     def sort_cameras_by_model(cls):
+        """
+        Class method which finds all cameras from DB and sorts them by model
+        :return: list of db entries
+        """
         return cls.query.order_by('model').all()

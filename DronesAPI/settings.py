@@ -1,0 +1,1 @@
+DATABASE_LOC = "sqlite:///DronesAPI/data/prod_data.db"

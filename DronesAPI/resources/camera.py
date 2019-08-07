@@ -28,6 +28,11 @@ _drone_parser.add_argument(
 class Camera(Resource):
     @staticmethod
     def get(model):
+        """
+        Static method that fetches and returns the camera entry with a specific model
+        :param model: camera model
+        :return: a dict with the camera data / an error message
+        """
         camera = CameraModel.find_camera_by_model(model)
         if camera:
             return camera.json()
@@ -38,6 +43,12 @@ class Camera(Resource):
     @staticmethod
     @fresh_jwt_required
     def delete(model):
+        """
+        Static method that fetches and deletes the camera entry with a specific model.
+        Can only be done if the user logged in is a support team user.
+        :param model: camera model
+        :return: a success message / an error message
+        """
         user_team = UserModel.find_user_by_id(get_current_user()).team
         if user_team == 'Support':
             camera = CameraModel.find_camera_by_model(model)
@@ -59,6 +70,10 @@ class Camera(Resource):
 class Cameras(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all cameras
+        :return: a list of dicts with the cameras data / an error message
+        """
         cameras = CameraModel.find_all_cameras()
         if cameras:
             output = []
@@ -74,6 +89,10 @@ class Cameras(Resource):
 class CamerasByModel(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all cameras, sorted by model
+        :return: a list of dicts with the cameras data / an error message
+        """
         cameras = CameraModel.sort_cameras_by_model()
         if cameras:
             output = []
@@ -90,6 +109,11 @@ class CameraRegister(Resource):
 
     @fresh_jwt_required
     def post(self):
+        """
+        Method saves a new camera.
+        Can only be done if the user logged in is a support team user.
+        :return: a success message / error message
+        """
         user_team = UserModel.find_user_by_id(get_current_user()).team
         if user_team == 'Support':
             data = _drone_parser.parse_args()

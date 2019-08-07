@@ -15,6 +15,9 @@ class DroneModel(db.Model):
         self.cameras = cameras
 
     def json(self):
+        """
+        This method returns a dict containing the object data, to be returned easily
+        """
         return {
             "serial_number": self.serial_number,
             "name": self.name,
@@ -22,37 +25,58 @@ class DroneModel(db.Model):
             "cameras": self.cameras
         }
 
-    # Method to save user to DB
     def save_to_db(self):
+        """
+        Method to save user to DB
+        """
         db.session.add(self)
         db.session.commit()
 
-    # Method to remove user from DB
     def remove_from_db(self):
+        """
+        Method to remove user from DB
+        """
         db.session.delete(self)
         db.session.commit()
 
-    # Class method which finds user from DB by username
     @classmethod
     def find_drone_by_serial(cls, serial_number):
+        """
+        Class method which finds user from DB by username
+        :param serial_number: drone serial number
+        :return: single db entry
+        """
         return cls.query.filter_by(serial_number=serial_number).first()
 
-    # Class method which finds user from DB by username
     @classmethod
     def find_drone_by_name(cls, serial_number):
+        """
+        Class method which finds user from DB by username
+        :param serial_number: drone serial number
+        :return: single db entry
+        """
         return cls.query.filter_by(serial_number=serial_number).first()
 
-    # Class method which finds all drones from DB
     @classmethod
     def find_all_drones(cls):
+        """
+        Class method which finds all drones from DB
+        :return: list of db entries
+        """
         return cls.query.all()
 
-    # Class method which finds all drones from DB and orders them by name
     @classmethod
     def sort_drones_by_name(cls):
+        """
+        Class method which finds all drones from DB and orders them by name
+        :return: list of db entries
+        """
         return cls.query.order_by("name").all()
 
-    # Class method which finds all drones from DB and orders them by serial number
     @classmethod
     def sort_drones_by_serialnumber(cls):
+        """
+        Class method which finds all drones from DB and orders them by serial number
+        :return: list of db entries
+        """
         return cls.query.order_by("serial_number").all()

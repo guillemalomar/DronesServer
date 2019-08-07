@@ -35,6 +35,11 @@ _drone_parser.add_argument(
 class DroneBySerial(Resource):
     @staticmethod
     def get(serial_number):
+        """
+        Static method that fetches and returns the drone entry with a specific serial number
+        :param serial_number: camera model
+        :return: a dict with the drone data / an error message
+        """
         drone = DroneModel.find_drone_by_serial(serial_number)
         if drone:
             return process_cameras(drone)
@@ -44,6 +49,12 @@ class DroneBySerial(Resource):
 
     @fresh_jwt_required
     def delete(self, serial_number):
+        """
+        Static method that fetches and deletes the drone entry with a specific serial number.
+        Can only be done if the user logged in is a support team user.
+        :param serial_number: drone serial number
+        :return: a success message / an error message
+        """
         user_team = UserModel.find_user_by_id(get_current_user()).team
         if user_team == 'Support':
             drone = DroneModel.find_drone_by_serial(serial_number)
@@ -65,6 +76,11 @@ class DroneBySerial(Resource):
 class DroneByName(Resource):
     @staticmethod
     def get(name):
+        """
+        Static method that fetches and returns the drone entries with a specific name
+        :param name: camera model
+        :return: a list of dicts with the drones data / an error message
+        """
         drones = DroneModel.find_drones_by_name(name)
         if drones:
             output = []
@@ -79,6 +95,10 @@ class DroneByName(Resource):
 class Drones(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all drones
+        :return: a list of dicts with the drones data / an error message
+        """
         drones = DroneModel.find_all_drones()
         if drones:
             output = []
@@ -93,6 +113,10 @@ class Drones(Resource):
 class DronesByName(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all drones, sorted by name
+        :return: a list of dicts with the drones data / an error message
+        """
         drones = DroneModel.sort_drones_by_name()
         if drones:
             output = []
@@ -107,6 +131,10 @@ class DronesByName(Resource):
 class DronesBySerialnumber(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all drones, sorted by serial number
+        :return: a list of dicts with the drones data / an error message
+        """
         drones = DroneModel.sort_drones_by_serialnumber()
         if drones:
             output = []
@@ -122,6 +150,11 @@ class DroneRegister(Resource):
 
     @fresh_jwt_required
     def post(self):
+        """
+        Method saves a new drone.
+        Can only be done if the user logged in is a support team user.
+        :return: a success message / error message
+        """
         user_team = UserModel.find_user_by_id(get_current_user()).team
         if user_team == 'Support':
             data = _drone_parser.parse_args()
@@ -149,6 +182,11 @@ class DroneRegister(Resource):
 
 
 def process_cameras(drone):
+    """
+    This method parses the drone "camera" field info and returns the drone with the found cameras data
+    :param drone: the drone with just a string as cameras info
+    :return: the drone with the cameras data assigned to it
+    """
     drone = drone.json()
     cameras = []
     for camera in drone['cameras'].split(','):

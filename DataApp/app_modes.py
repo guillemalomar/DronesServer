@@ -11,7 +11,6 @@ def get_users(hostname, port):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :return:
     """
     logging.debug('get_users method called')
     print("------------------ DATABASE USERS ------------------")
@@ -24,7 +23,6 @@ def get_drones(hostname, port):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :return:
     """
     logging.debug('get_drones method called')
     print("------------------ DATABASE DRONES ------------------")
@@ -88,7 +86,6 @@ def sort_users_by_name(hostname, port):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :return:
     """
     logging.debug('sort_users_by_name method called')
     print("------------------ DATABASE USERS ------------------")
@@ -101,7 +98,6 @@ def sort_drones_by_serialnumber(hostname, port):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :return:
     """
     logging.debug('sort_drones_by_serialnumber method called')
     print("------------------ DATABASE DRONES ------------------")
@@ -114,7 +110,6 @@ def sort_drones_by_name(hostname, port):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :return:
     """
     logging.debug('sort_drones_by_name method called')
     print("------------------ DATABASE DRONES ------------------")
@@ -139,10 +134,10 @@ def register_user(hostname, port, user, password, team, access_token):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param user:
-    :param password:
-    :param team:
-    :param access_token:
+    :param user: user name
+    :param password: user pass
+    :param team: user team
+    :param access_token: current user token
     """
     logging.debug('register_user method called')
     print("------------------ REGISTERING USER ------------------")
@@ -166,10 +161,10 @@ def register_admin_user(hostname, port, user, password, team, secret_key):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param user:
-    :param password:
-    :param team:
-    :param secret_key:
+    :param user: user name
+    :param password: user pass
+    :param team: user team
+    :param secret_key: admin secret key
     """
     logging.debug('register_user method called')
     print("------------------ REGISTERING USER ------------------")
@@ -193,14 +188,10 @@ def register_drone(hostname, port, serial_number, name, brand, cameras, access_t
     :param port: server port
     :param serial_number:
     :type serial_number:
-    :param name:
-    :type name:
-    :param brand:
-    :type brand:
-    :param cameras:
-    :type cameras:
-    :param access_token:
-    :type access_token:
+    :param name: drone name
+    :param brand: drone brand
+    :param cameras: drone cameras
+    :param access_token: current user token
     """
     logging.debug('register_drone method called')
     print("------------------ REGISTERING DRONE ------------------")
@@ -225,16 +216,10 @@ def register_camera(hostname, port, model, megapixels, brand, access_token):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param model:
-    :type model:
-    :param megapixels:
-    :type megapixels:
-    :param brand:
-    :type brand:
-    :param access_token:
-    :type access_token:
-    :return:
-    :rtype:
+    :param model: camera model
+    :param megapixels: amount of megapixels
+    :param brand: camera brand
+    :param access_token: current user token
     """
     logging.debug('register_camera method called')
     print("------------------ REGISTERING CAMERA ------------------")
@@ -259,7 +244,7 @@ def delete_user(hostname, port, user_id, access_token):
     :param hostname: server location
     :param port: server port
     :param user_id: user id
-    :param access_token:
+    :param access_token: current user token
     """
     logging.debug('delete_user method called')
     print("------------------ REGISTERING USER ------------------")
@@ -279,7 +264,7 @@ def delete_drone(hostname, port, serial_number, access_token):
     :param hostname: server location
     :param port: server port
     :param serial_number: drone serial_number
-    :param access_token:
+    :param access_token: current user token
     """
     logging.debug('delete_drone method called')
     print("------------------ REGISTERING DRONE ------------------")
@@ -299,7 +284,7 @@ def delete_camera(hostname, port, model, access_token):
     :param hostname: server location
     :param port: server port
     :param model: camera model
-    :param access_token:
+    :param access_token: current user token
     """
     logging.debug('delete_camera method called')
     print("------------------ DELETE CAMERA ------------------")
@@ -318,12 +303,9 @@ def user_login(hostname, port, user, password):
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param user:
-    :type user:
-    :param password:
-    :type password:
-    :return:
-    :rtype:
+    :param user: user name
+    :param password: user pass
+    :return: access token / None
     """
     logging.debug('register_camera method called')
     print("------------------ USER LOGIN ------------------")
@@ -340,7 +322,13 @@ def user_login(hostname, port, user, password):
 
 
 def fill_database(hostname, port, access_token, data_file):
-
+    """
+    Obtains some test data and sends it to the server
+    :param hostname: server location
+    :param port: server port
+    :param access_token: current user token
+    :param data_file: file with test data
+    """
     with open(data_file) as json_file:
         data = json.load(json_file)
         r = None

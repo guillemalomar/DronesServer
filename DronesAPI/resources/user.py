@@ -7,7 +7,7 @@ from flask_jwt_extended import create_access_token,\
                                get_current_user
 
 from DronesAPI.models.user import UserModel
-from DronesAPI.creds import admin_secret_key
+from DronesAPI.creds import ADMIN_SECRET_KEY
 
 import hashlib
 
@@ -41,6 +41,11 @@ _user_parser.add_argument(
 class User(Resource):
     @staticmethod
     def get(user_id):
+        """
+        Static method that fetches and returns the user entry with a specific id
+        :param user_id: user id
+        :return: a dict with the camera data / an error message
+        """
         user = UserModel.find_user_by_id(user_id)
         if user:
             return user.json()
@@ -51,21 +56,37 @@ class User(Resource):
 
     @fresh_jwt_required
     def delete(self, user_id):
-        user = UserModel.find_user_by_id(user_id)
-        if user:
-            user.remove_from_db()
-            return {
-                       "message": "User deleted!"
-                   }
+        """
+        Static method that fetches and deletes the user entry with a specific id.
+        Can only be done if the user logged in is a support team user.
+        :param user_id: user id
+        :return: a success message / an error message
+        """
+        user_team = UserModel.find_user_by_id(get_current_user()).team
+        if user_team == 'Support':
+            user = UserModel.find_user_by_id(user_id)
+            if user:
+                user.remove_from_db()
+                return {
+                           "message": "User deleted!"
+                       }
 
-        return {
-                   "message": "User not found!"
-               }, 404
+            return {
+                       "message": "User not found!"
+                   }, 404
+        else:
+            return {
+                       "message": "Non authorized user!"
+                   }, 400
 
 
 class Users(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all users
+        :return: a list of dicts with the users data / an error message
+        """
         users = UserModel.find_all_users()
         if users:
             output = {}
@@ -81,6 +102,10 @@ class Users(Resource):
 class UsersByName(Resource):
     @staticmethod
     def get():
+        """
+        Static method that fetches and returns all users, sorted by name
+        :return: a list of dicts with the users data / an error message
+        """
         users = UserModel.find_users_by_name()
         if users:
             output = {}
@@ -96,8 +121,12 @@ class UsersByName(Resource):
 class UserAdminRegister(Resource):
     @staticmethod
     def post():
+        """
+        Method saves a new admin user.
+        :return: a success message / error message
+        """
         data = _user_parser.parse_args()
-        if data['secret_key'] == admin_secret_key:
+        if data['secret_key'] == ADMIN_SECRET_KEY:
             if UserModel.find_user_by_username(data["username"]):
                 return {
                            "message": "User exists!"
@@ -120,6 +149,11 @@ class UserRegister(Resource):
     @staticmethod
     @fresh_jwt_required
     def post():
+        """
+        Method saves a new user.
+        Can only be done if the user logged in is a support team user.
+        :return: a success message / error message
+        """
         data = _user_parser.parse_args()
         user = get_current_user()
         if user:
@@ -150,6 +184,10 @@ class UserRegister(Resource):
 class UserLogin(Resource):
     @staticmethod
     def post():
+        """
+        This method checks if the user that is trying to login is a registered user, and returns authentication data
+        :return: a dict with authentication tokens / an error message
+        """
         data = _user_parser.parse_args()
 
         user = UserModel.find_user_by_username(data["username"])

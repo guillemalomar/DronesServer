@@ -1,6 +1,5 @@
-# RedditCrawler
+# Drones Server
 
-*    Title: Drones API    
 *    Author: Guillem Alomar      
 *    Initial release: August 7th, 2019                     
 *    Code version: 0.1                         
@@ -15,6 +14,7 @@
     * [First of all](#first-of-all)
     * [Running the server](#running-the-server)
     * [Executing the client application](#executing-the-client-application)
+* [Endpoints](#endpoints)
 * [Decisions taken](#decisions-taken)
 
 ## Documentation
@@ -37,12 +37,17 @@ The complete list of packages is available in the file _requirements.txt_
 
 ### First of all
 
-- I recommend creating a virtualenv for this project. After creating it and activating it, you should run:
+- Installation
+
+I recommend creating a virtualenv for this project. After creating it and activating it, you should run:
 ```
+~/DronesAPI$ virtualenv -p python3 venv
+~/DronesAPI$ source venv/bin/activate
 ~/DronesAPI$ pip install -r requirements.txt
 ```
-
 Now all pip packages needed have been installed.
+
+- Credentials
 
 To be able to create admin users, a user must have a secret key which can be specified in the _creds.py_ file. This file can be created from the _creds_dummy.py_ file with your own key.
 
@@ -76,6 +81,29 @@ Now that the server is running, we can execute an application that encapsulates 
 ~/DronesAPI$ python testing_application.py
 ```
 
+## Endpoints
+```
+(POST)Normal user registration:       "/user/register"
+(POST)Admin user registration :       "/user/adminregister"
+(POST)User Login:                     "/login"
+(POST)Camera registration:            "/camera/register"
+(POST)Drone registration:             "/drone/register"
+(GET)Get user with ID:                "/user/<int:user_id>"
+(GET)Get all users:                   "/users"
+(GET)Get all users sorted by name:    "/users/sort/name"
+(GET)Get camera with model:           "/camera/<model>"
+(GET)Get all cameras:                 "/cameras"
+(GET)Get all cameras sorted by model: "/cameras/sort/model"
+(GET)Get drone with serial:           "/drone/serial/<int:serial_number>"
+(GET)Get drone with name:             "/drone/name/<name>"
+(GET)Get all drones:                  "/drones"
+(GET)Get all drones sorted by serial: "/drones/sort/serialnumber"
+(GET)Get all drones sorted by name:   "/drones/sort/name"
+(DELETE)Delete user with ID:          "/user/<int:user_id>"
+(DELETE)Delete camera with model:     "/camera/<model>"
+(DELETE)Delete drone with serial:     "/drone/serial/<int:serial_number>"
+```
+
 ## Decisions taken
 
 To do this project I followed some basic instructions, but the specific components and architecture had to be chosen by me.
@@ -96,6 +124,10 @@ Currently, only users from the Support team can execute commands that involve re
 
 There is a thing that I had to consider when modeling the API data. Drones contain a list of possible cameras. I decided to create another table only for cameras data. This way, whenever a drone has to be registered, the API checks if all the drones specified camera models exist as a registered camera, and otherwise it will not register the drone. This way I can also easily obtain the cameras information without having to check all drones (which I guess would be stored in a much bigger table).
 
+- Client application
+
+I know this wasn't a requirement, and that apart from the encapsulation this client doesn't do much, but I could reuse another one from one of my other projects, and I think that is convenient when the user wants to start testing an API without having to check all the endpoints syntax.
+
 - Testing
 
 I always make tests for my codes, but in this case I don't have the knowledge do them taking into account the logged users keys. If I knew that I would create a test for each endpoint and resource method, with a new database only for that. If I had to work more on the project, I would modify the git hook to avoid being able to do commits unless all tests passed.
@@ -104,3 +136,7 @@ I always make tests for my codes, but in this case I don't have the knowledge do
 
 I have previously deployed this kind of servers using Jenkins, and it's what I would propose to do as it's for an internal server.
 I don't think this would have to store and deliver enough data to justify having a QA deployment for testing. The methods would be also quite fixed, from the specifications it doesn't seem that it would change often.
+
+- Future work
+
+This is just a first stage of the application. There are many things that can be improved. The logs aren't really specific; it lacks tests; monitoring could be useful in the future when there will be much more data... But I think that the result is quite satisfactory with the amount of dedicated time.

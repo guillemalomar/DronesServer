@@ -136,3 +136,7 @@ I always make tests for my codes, but in this case I don't have the knowledge do
 
 I have previously deployed this kind of servers using Jenkins, and it's what I would propose to do as it's for an internal server.
 I don't think this would have to store and deliver enough data to justify having a QA deployment for testing. The methods would be also quite fixed, from the specifications it doesn't seem that it would change often.
+
+- Future work
+
+This is just a first stage of the application. There are many things that can be improved. The logs aren't really specific; it lacks tests; monitoring could be useful in the future when there will be much more data... But I think that the result is quite satisfactory with the amount of dedicated time.

@@ -1,3 +1,4 @@
+import logging
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import fresh_jwt_required, get_current_user
 
@@ -42,9 +43,11 @@ class DroneBySerial(Resource):
         """
         drone = DroneModel.find_drone_by_serial(serial_number)
         if drone:
+            logging.info(process_cameras(drone))
             return process_cameras(drone)
+        logging.info("No drone found")
         return {
-                   "message": "Drone not found!"
+                   "message": "Drone not found"
                }, 404
 
     @fresh_jwt_required
@@ -60,16 +63,18 @@ class DroneBySerial(Resource):
             drone = DroneModel.find_drone_by_serial(serial_number)
             if drone:
                 drone.remove_from_db()
+                logging.info("Drone deleted")
                 return {
-                           "message": "Drone deleted!"
+                           "message": "Drone deleted"
                        }
-
+            logging.info("No drone found")
             return {
-                       "message": "Drone not found!"
+                       "message": "Drone not found"
                    }, 404
         else:
+            logging.info("Non authorized user")
             return {
-                       "message": "Non authorized user!"
+                       "message": "Non authorized user"
                    }, 400
 
 
@@ -86,9 +91,11 @@ class DroneByName(Resource):
             output = []
             for drone in drones:
                 output.append(process_cameras(drone))
+            logging.info(output)
             return output
+        logging.info("No drones found")
         return {
-                   "message": "Drone not found!"
+                   "message": "Drone not found"
                }, 404
 
 
@@ -104,9 +111,11 @@ class Drones(Resource):
             output = []
             for drone in drones:
                 output.append(process_cameras(drone))
+            logging.info(output)
             return output
+        logging.info("No drones found")
         return {
-                   "message": "No drones found!"
+                   "message": "No drones found"
                }, 404
 
 
@@ -122,9 +131,11 @@ class DronesByName(Resource):
             output = []
             for drone in drones:
                 output.append(process_cameras(drone))
+            logging.info(output)
             return output
+        logging.info("No drones found")
         return {
-                   "message": "No drones found!"
+                   "message": "No drones found"
                }, 404
 
 
@@ -140,9 +151,11 @@ class DronesBySerialnumber(Resource):
             output = []
             for drone in drones:
                 output.append(process_cameras(drone))
+            logging.info(output)
             return output
+        logging.info("No drones found")
         return {
-                   "message": "No drones found!"
+                   "message": "No drones found"
                }, 404
 
 
@@ -161,23 +174,27 @@ class DroneRegister(Resource):
             for camera in data['cameras'].split(','):
                 found_camera = CameraModel.find_camera_by_model(camera.strip())
                 if not found_camera:
+                    logging.info("Camera not correct: {}".format(camera.strip()))
                     return {
                            "message": "Camera not correct: {}".format(camera.strip())
                        }, 400
 
             if DroneModel.find_drone_by_serial(data["serial_number"]):
+                logging.info("Drone {} already exists".format(data["serial_number"]))
                 return {
                            "message": "Drone {} already exists".format(data["serial_number"])
                        }, 400
 
             drone = DroneModel(data["serial_number"], data["name"], data["brand"], data['cameras'])
             drone.save_to_db()
+            logging.info("Drone {} created".format(data["serial_number"]))
             return {
                 "message": "Drone {} created".format(data["serial_number"])
             }
         else:
+            logging.info("Non authorized user")
             return {
-                       "message": "Non authorized user!"
+                       "message": "Non authorized user"
                    }, 400
 
 

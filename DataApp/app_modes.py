@@ -2,8 +2,8 @@ import logging
 import json
 import requests
 
-logging.basicConfig(filename='DataApp/logs/DataApp.log', level=logging.DEBUG)
-logging.getLogger("urllib2").setLevel(logging.WARNING)
+logging.basicConfig(filename='DataApp/logs/DataApp.log', level=logging.INFO)
+logging.getLogger("urllib2").setLevel(logging.INFO)
 
 
 def get_users(hostname, port):

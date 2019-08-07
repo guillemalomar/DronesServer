@@ -1,3 +1,4 @@
+import logging
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token,\
                                create_refresh_token,\
@@ -48,10 +49,12 @@ class User(Resource):
         """
         user = UserModel.find_user_by_id(user_id)
         if user:
+            logging.info(user.json())
             return user.json()
 
+        logging.info("User not found")
         return {
-                   "message": "User not found!"
+                   "message": "User not found"
                }, 404
 
     @fresh_jwt_required
@@ -67,16 +70,19 @@ class User(Resource):
             user = UserModel.find_user_by_id(user_id)
             if user:
                 user.remove_from_db()
+                logging.info("User deleted")
                 return {
-                           "message": "User deleted!"
+                           "message": "User deleted"
                        }
 
+            logging.info("User not found")
             return {
-                       "message": "User not found!"
+                       "message": "User not found"
                    }, 404
         else:
+            logging.error("Unauthorized user")
             return {
-                       "message": "Non authorized user!"
+                       "message": "Non authorized user"
                    }, 400
 
 
@@ -92,10 +98,12 @@ class Users(Resource):
             output = {}
             for ind, user in enumerate(users):
                 output[str(ind)] = user.json()
+            logging.info(output)
             return output
 
+        logging.error("Users not found")
         return {
-                   "message": "Users not found!"
+                   "message": "Users not found"
                }, 404
 
 
@@ -111,10 +119,11 @@ class UsersByName(Resource):
             output = {}
             for ind, user in enumerate(users):
                 output[str(ind)] = user.json()
+            logging.info(output)
             return output
-
+        logging.info("Users not found")
         return {
-                   "message": "Users not found!"
+                   "message": "Users not found"
                }, 404
 
 
@@ -128,20 +137,23 @@ class UserAdminRegister(Resource):
         data = _user_parser.parse_args()
         if data['secret_key'] == ADMIN_SECRET_KEY:
             if UserModel.find_user_by_username(data["username"]):
+                logging.info("User already exists")
                 return {
-                           "message": "User exists!"
+                           "message": "User already exists"
                        }, 400
 
             user = UserModel(data["username"],
                              hashlib.sha256(data["password"].encode("utf-8")).hexdigest(),
                              data['team'])
             user.save_to_db()
+            logging.info("User {} created".format(data["username"]))
             return {
-                "message": "User {} created!".format(data["username"])
+                "message": "User {} created".format(data["username"])
             }
         else:
+            logging.info("Unloged users cannot created users without a correct secret_key")
             return {
-                       "message": "Unloged users cannot created users without a correct secret_key!"
+                       "message": "Unloged users cannot created users without a correct secret_key"
                    }, 400
 
 
@@ -160,24 +172,28 @@ class UserRegister(Resource):
             user_team = UserModel.find_user_by_id(user).team
             if user_team == 'Support':
                 if UserModel.find_user_by_username(data["username"]):
+                    logging.info("User already exists")
                     return {
-                               "message": "User exists!"
+                               "message": "User already exists"
                            }, 400
 
                 user = UserModel(data["username"],
                                  hashlib.sha256(data["password"].encode("utf-8")).hexdigest(),
                                  data['team'])
                 user.save_to_db()
+                logging.info("User {} created".format(data["username"]))
                 return {
-                    "message": "User {} created!".format(data["username"])
+                    "message": "User {} created".format(data["username"])
                 }
             else:
+                logging.info("Non authorized user")
                 return {
-                           "message": "Non authorized user!"
+                           "message": "Non authorized user"
                        }, 400
         else:
+            logging.info("Unlogged users cannot create other users")
             return {
-                       "message": "Unlogged users cannot create other users!"
+                       "message": "Unlogged users cannot create other users"
                    }, 400
 
 
@@ -195,14 +211,14 @@ class UserLogin(Resource):
         if user and user.password == hashlib.sha256(data["password"].encode("utf-8")).hexdigest():
             access_token = create_access_token(identity=user.id, fresh=True)  # Puts User ID as Identity in JWT
             refresh_token = create_refresh_token(identity=user.id)  # Puts User ID as Identity in JWT
-
+            logging.info("Login credentials obtained")
             return {
                        "access_token": access_token,
                        "refresh_token": refresh_token
                    }
-
+        logging.info("Invalid credentials")
         return {
-                   "message": "Invalid credentials!"
+                   "message": "Invalid credentials"
                }, 401
 
 

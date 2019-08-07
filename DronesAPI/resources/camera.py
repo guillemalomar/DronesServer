@@ -1,3 +1,4 @@
+import logging
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import fresh_jwt_required, get_current_user
 
@@ -35,7 +36,9 @@ class Camera(Resource):
         """
         camera = CameraModel.find_camera_by_model(model)
         if camera:
+            logging.info(camera.json())
             return camera.json()
+        logging.info("Camera not found!")
         return {
                    "message": "Camera not found!"
                }, 404
@@ -54,14 +57,16 @@ class Camera(Resource):
             camera = CameraModel.find_camera_by_model(model)
             if camera:
                 camera.remove_from_db()
+                logging.info("Camera deleted!")
                 return {
                            "message": "Camera deleted!"
                        }
-
+            logging.info("Camera not found!")
             return {
                        "message": "Camera not found!"
                    }, 404
         else:
+            logging.info("Non authorized user!")
             return {
                        "message": "Non authorized user!"
                    }, 400
@@ -79,8 +84,10 @@ class Cameras(Resource):
             output = []
             for camera in cameras:
                 output.append(camera.json())
+            logging.info(output)
             return output
 
+        logging.info("No cameras found!")
         return {
                    "message": "No cameras found!"
                }, 404
@@ -98,8 +105,10 @@ class CamerasByModel(Resource):
             output = []
             for camera in cameras:
                 output.append(camera.json())
+            logging.info(output)
             return output
 
+        logging.info("No cameras found!")
         return {
                    "message": "No cameras found!"
                }, 404
@@ -119,16 +128,19 @@ class CameraRegister(Resource):
             data = _drone_parser.parse_args()
 
             if CameraModel.find_camera_by_model(data["model"]):
+                logging.info("The camera already exists")
                 return {
-                           "message": "Camera exists!"
+                           "message": "The camera already exists!"
                        }, 400
 
             drone = CameraModel(data["model"], data["megapixels"], data["brand"])
             drone.save_to_db()
+            logging.info("Camera {} created!".format(data["model"]))
             return {
                 "message": "Camera {} created!".format(data["model"])
             }
         else:
+            logging.info("Non authorized user!")
             return {
                        "message": "Non authorized user!"
                    }, 400

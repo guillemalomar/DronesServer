@@ -1,6 +1,5 @@
-# RedditCrawler
+# Drones Server
 
-*    Title: Drones API    
 *    Author: Guillem Alomar      
 *    Initial release: August 7th, 2019                     
 *    Code version: 0.1                         
@@ -37,12 +36,17 @@ The complete list of packages is available in the file _requirements.txt_
 
 ### First of all
 
-- I recommend creating a virtualenv for this project. After creating it and activating it, you should run:
+- Installation
+
+I recommend creating a virtualenv for this project. After creating it and activating it, you should run:
 ```
+~/DronesAPI$ virtualenv -p python3 venv
+~/DronesAPI$ source venv/bin/activate
 ~/DronesAPI$ pip install -r requirements.txt
 ```
-
 Now all pip packages needed have been installed.
+
+- Credentials
 
 To be able to create admin users, a user must have a secret key which can be specified in the _creds.py_ file. This file can be created from the _creds_dummy.py_ file with your own key.
 
@@ -76,6 +80,29 @@ Now that the server is running, we can execute an application that encapsulates 
 ~/DronesAPI$ python testing_application.py
 ```
 
+## Endpoints
+```
+(POST)Normal user registration:       "/user/register"
+(POST)Admin user registration :       "/user/adminregister"
+(POST)User Login:                     "/login"
+(POST)Camera registration:            "/camera/register"
+(POST)Drone registration:             "/drone/register"
+(GET)Get user with ID:                "/user/<int:user_id>"
+(GET)Get all users:                   "/users"
+(GET)Get all users sorted by name:    "/users/sort/name"
+(GET)Get camera with model:           "/camera/<model>"
+(GET)Get all cameras:                 "/cameras"
+(GET)Get all cameras sorted by model: "/cameras/sort/model"
+(GET)Get drone with serial:           "/drone/serial/<int:serial_number>"
+(GET)Get drone with name:             "/drone/name/<name>"
+(GET)Get all drones:                  "/drones"
+(GET)Get all drones sorted by serial: "/drones/sort/serialnumber"
+(GET)Get all drones sorted by name:   "/drones/sort/name"
+(DELETE)Delete user with ID:          "/user/<int:user_id>"
+(DELETE)Delete camera with model:     "/camera/<model>"
+(DELETE)Delete drone with serial:     "/drone/serial/<int:serial_number>"
+```
+
 ## Decisions taken
 
 To do this project I followed some basic instructions, but the specific components and architecture had to be chosen by me.
@@ -95,6 +122,10 @@ Currently, only users from the Support team can execute commands that involve re
 - Drone registration and cameras data
 
 There is a thing that I had to consider when modeling the API data. Drones contain a list of possible cameras. I decided to create another table only for cameras data. This way, whenever a drone has to be registered, the API checks if all the drones specified camera models exist as a registered camera, and otherwise it will not register the drone. This way I can also easily obtain the cameras information without having to check all drones (which I guess would be stored in a much bigger table).
+
+- Client application
+
+I know this wasn't a requirement, and that apart from the encapsulation this client doesn't do much, but I could reuse another one from one of my other projects, and I think that is convenient when the user wants to start testing an API without having to check all the endpoints syntax.
 
 - Testing
 

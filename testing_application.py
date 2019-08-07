@@ -105,7 +105,7 @@ if __name__ == "__main__":
                         default=5000, type=int)
     parser.add_argument('--datafile', action="store", dest="datafile",
                         help="Datafile for the server database",
-                        default='test_data/my_data.json', type=str)
+                        default='DataApp/test_data/my_data.json', type=str)
 
     args = parser.parse_args()
     hostname = args.hostname

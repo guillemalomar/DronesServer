@@ -5,7 +5,7 @@ def set_logger():
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%m-%d %H:%M',
-                        filename='logs/rest_api.log',
+                        filename='DronesAPI/logs/rest_api.log',
                         filemode='w')
     console = logging.StreamHandler()
     console.setLevel(logging.ERROR)

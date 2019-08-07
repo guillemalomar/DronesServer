@@ -38,14 +38,14 @@
         },
         {
           "serial_number": 7,
-          "name": "my drone 6",
-          "brand": "CANON",
+          "name": "ZZZ Drone",
+          "brand": "SONY",
           "cameras": "CANONFX, NIKONHDULTRA"
         },
         {
           "serial_number": 8,
-          "name": "blablabla",
-          "brand": "CANON",
+          "name": "AAA Drone",
+          "brand": "Capsule Corp",
           "cameras": "CANONFX, NIKONHDULTRA, NIKONHD"
         }
     ],

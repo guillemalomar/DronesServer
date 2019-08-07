@@ -2,7 +2,7 @@ import logging
 import json
 import requests
 
-logging.basicConfig(filename='logs/DataApp.log', level=logging.DEBUG)
+logging.basicConfig(filename='DataApp/logs/DataApp.log', level=logging.DEBUG)
 logging.getLogger("urllib2").setLevel(logging.WARNING)
 
 

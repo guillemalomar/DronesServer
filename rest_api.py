@@ -4,17 +4,18 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from DronesAPI.tools.logger import set_logger
-from DronesAPI.resources.user import User, UsersByName, UserLogin, Users, UserRegister
+from DronesAPI.database.db import db
+from DronesAPI.resources.camera import Camera, Cameras, CamerasByModel, CameraRegister
 from DronesAPI.resources.drone import DroneBySerial, DroneByName, Drones, DroneRegister, DronesByName,\
                                       DronesBySerialnumber
-from DronesAPI.resources.camera import Camera, Cameras, CamerasByModel, CameraRegister
+from DronesAPI.resources.user import User, UsersByName, UserLogin, Users, UserRegister
+from DronesAPI.tools.logger import set_logger
 
 
 set_logger()
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data/prod_data.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///DronesAPI/data/prod_data.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -22,6 +23,8 @@ app.secret_key = "my_s3cr3t_p4ss"
 api = Api(app)
 
 jwt = JWTManager(app)
+
+db.init_app(app)
 
 
 @jwt.expired_token_loader
@@ -89,9 +92,6 @@ api.add_resource(DronesBySerialnumber, "/drones/sort/serialnumber")
 api.add_resource(DronesByName, "/drones/sort/name")
 
 if __name__ == '__main__':
-    from DronesAPI.database.db import db
-
-    db.init_app(app)
 
     @app.before_first_request
     def create_tables():

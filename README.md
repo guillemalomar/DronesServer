@@ -14,6 +14,7 @@
     * [First of all](#first-of-all)
     * [Running the server](#running-the-server)
     * [Executing the client application](#executing-the-client-application)
+* [Endpoints](#endpoints)
 * [Decisions taken](#decisions-taken)
 
 ## Documentation

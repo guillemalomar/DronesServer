@@ -1,0 +1,1 @@
+admin_secret_key = 'dummy_key'

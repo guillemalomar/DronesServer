@@ -134,16 +134,15 @@ def get_cameras_by_model(hostname, port):
     print(r.content.decode("utf-8"))
 
 
-def register_user(hostname, port, user, password, team):
+def register_user(hostname, port, user, password, team, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
     :param user:
-    :type user:
     :param password:
-    :type password:
     :param team:
+    :param access_token:
     """
     logging.debug('register_user method called')
     print("------------------ REGISTERING USER ------------------")
@@ -152,11 +151,39 @@ def register_user(hostname, port, user, password, team):
                           'username': user,
                           'password': password,
                           'team': team
+                      },
+                      headers={
+                          'authorization': 'Bearer ' + access_token
                       })
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
         print("Error trying to register the user")
+
+
+def register_admin_user(hostname, port, user, password, team, secret_key):
+    """
+    Show the top10 pages, by points
+    :param hostname: server location
+    :param port: server port
+    :param user:
+    :param password:
+    :param team:
+    :param secret_key:
+    """
+    logging.debug('register_user method called')
+    print("------------------ REGISTERING USER ------------------")
+    r = requests.post("http://{}:{}/user/adminregister".format(hostname, port),
+                      data={
+                          'username': user,
+                          'password': password,
+                          'team': team,
+                          'secret_key': secret_key
+                      })
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error trying to register admin user")
 
 
 def register_drone(hostname, port, serial_number, name, brand, cameras, access_token):

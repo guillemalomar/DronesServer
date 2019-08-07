@@ -4,6 +4,8 @@ from DataApp import app_modes
 
 access_token = "NotObtainedYet"
 
+admin_secret_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjUxNTU1MTksIm5iZiI6MTU2NTE1NTUxOSwianRpIjoiOTlkYzRlZjEtMjE0NS00ZGViLTg5NmUtNGZkMWY4YmFhMzhhIiwiZXhwIjoxNTY1MTU2NDE5LCJpZGVudGl0eSI6MSwiZnJlc2giOnRydWUsInR5cGUiOiJhY2Nlc3MifQ.Mi_O3UvOolfG2OfgPKsYv_V3F-GM2FGEsaDmcEW1kHo'
+
 
 def clean_screen():
     """
@@ -139,7 +141,7 @@ if __name__ == "__main__":
         elif var == '3':
             app_modes.get_cameras(hostname, port)
         elif var == '4':
-            user_id = input("Please, enter a user id: ")
+            user_id = input("Please, en1ter a user id: ")
             app_modes.get_user_by_id(hostname, port, user_id)
         elif var == '5':
             serial_number = input("Please, enter a drone serial number: ")
@@ -159,12 +161,14 @@ if __name__ == "__main__":
             user = "Tony"
             password = "tonypass"
             team = "Developer"
-            app_modes.register_user(hostname, port, user, password, team)
+            secret_key = admin_secret_key
+            app_modes.register_user(hostname, port, user, password, team, access_token)
         elif var == '12':
             user = "Guillem"
             password = "guillempass"
             team = "Support"
-            app_modes.register_user(hostname, port, user, password, team)
+            secret_key = admin_secret_key
+            app_modes.register_admin_user(hostname, port, user, password, team, secret_key)
         elif var == '13':
             serial_number = input("Please, enter a drone serial number: ")
             name = input("Please, enter a drone name: ")

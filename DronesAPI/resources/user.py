@@ -3,9 +3,11 @@ from flask_jwt_extended import create_access_token,\
                                create_refresh_token,\
                                jwt_refresh_token_required,\
                                get_jwt_identity,\
-                               fresh_jwt_required
+                               fresh_jwt_required,\
+                               get_current_user
 
 from DronesAPI.models.user import UserModel
+from DronesAPI.creds import admin_secret_key
 
 import hashlib
 
@@ -24,6 +26,12 @@ _user_parser.add_argument(
 )
 _user_parser.add_argument(
     "team",
+    type=str,
+    required=False,
+    help="This field can be blank"
+)
+_user_parser.add_argument(
+    "secret_key",
     type=str,
     required=False,
     help="This field can be blank"
@@ -85,21 +93,58 @@ class UsersByName(Resource):
                }, 404
 
 
-class UserRegister(Resource):
+class UserAdminRegister(Resource):
     @staticmethod
     def post():
         data = _user_parser.parse_args()
+        if data['secret_key'] == admin_secret_key:
+            if UserModel.find_user_by_username(data["username"]):
+                return {
+                           "message": "User exists!"
+                       }, 400
 
-        if UserModel.find_user_by_username(data["username"]):
+            user = UserModel(data["username"],
+                             hashlib.sha256(data["password"].encode("utf-8")).hexdigest(),
+                             data['team'])
+            user.save_to_db()
             return {
-                       "message": "User exists!"
+                "message": "User {} created!".format(data["username"])
+            }
+        else:
+            return {
+                       "message": "Unloged users cannot created users without a correct secret_key!"
                    }, 400
 
-        user = UserModel(data["username"], hashlib.sha256(data["password"].encode("utf-8")).hexdigest(), data['team'])
-        user.save_to_db()
-        return {
-            "message": "User {} created!".format(data["username"])
-        }
+
+class UserRegister(Resource):
+    @staticmethod
+    @fresh_jwt_required
+    def post():
+        data = _user_parser.parse_args()
+        user = get_current_user()
+        if user:
+            user_team = UserModel.find_user_by_id(user).team
+            if user_team == 'Support':
+                if UserModel.find_user_by_username(data["username"]):
+                    return {
+                               "message": "User exists!"
+                           }, 400
+
+                user = UserModel(data["username"],
+                                 hashlib.sha256(data["password"].encode("utf-8")).hexdigest(),
+                                 data['team'])
+                user.save_to_db()
+                return {
+                    "message": "User {} created!".format(data["username"])
+                }
+            else:
+                return {
+                           "message": "Non authorized user!"
+                       }, 400
+        else:
+            return {
+                       "message": "Unlogged users cannot create other users!"
+                   }, 400
 
 
 class UserLogin(Resource):

@@ -8,7 +8,7 @@ from DronesAPI.database.db import db
 from DronesAPI.resources.camera import Camera, Cameras, CamerasByModel, CameraRegister
 from DronesAPI.resources.drone import DroneBySerial, DroneByName, Drones, DroneRegister, DronesByName,\
                                       DronesBySerialnumber
-from DronesAPI.resources.user import User, UsersByName, UserLogin, Users, UserRegister
+from DronesAPI.resources.user import User, UsersByName, UserLogin, Users, UserRegister, UserAdminRegister
 from DronesAPI.tools.logger import set_logger
 
 
@@ -21,10 +21,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.secret_key = "my_s3cr3t_p4ss"
 api = Api(app)
+db.init_app(app)
 
 jwt = JWTManager(app)
-
-db.init_app(app)
 
 
 @jwt.expired_token_loader
@@ -73,6 +72,7 @@ def user_loader_callback(identity):
 
 
 api.add_resource(UserRegister, "/user/register")
+api.add_resource(UserAdminRegister, "/user/adminregister")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(Users, "/users")
 api.add_resource(UsersByName, "/users/sort/name")
@@ -90,6 +90,7 @@ api.add_resource(DroneByName, "/drone/name/<name>")
 api.add_resource(Drones, "/drones")
 api.add_resource(DronesBySerialnumber, "/drones/sort/serialnumber")
 api.add_resource(DronesByName, "/drones/sort/name")
+
 
 if __name__ == '__main__':
 

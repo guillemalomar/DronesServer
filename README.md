@@ -89,24 +89,80 @@ Now that the server is running, we can execute an application that encapsulates 
 ## Endpoints
 ```
 (POST)   Normal user registration:        "/user/register"
+Data inputs: username, password, team
+Requires access token: yes
+
 (POST)   Admin user registration :        "/user/adminregister"
+Data inputs: username, password, team, secret_key
+Requires access token: no
+
 (POST)   User Login:                      "/login"
+Data inputs: username, password
+Requires access token: no
+
 (POST)   Camera registration:             "/camera/register"
+Data inputs: model, megapixels, brand
+Requires access token: yes
+
 (POST)   Drone registration:              "/drone/register"
+Data inputs: serial_number, name, brand, cameras
+Requires access token: yes
+
 (GET)    Get user with ID:                "/user/<int:user_id>"
+Data inputs:
+Requires access token: no
+
 (GET)    Get all users:                   "/users"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get all users sorted by name:    "/users/sort/name"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get camera with model:           "/camera/<model>"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get all cameras:                 "/cameras"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get all cameras sorted by model: "/cameras/sort/model"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get drone with serial:           "/drone/serial/<int:serial_number>"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get drone with name:             "/drone/name/<name>"
+Data inputs:
+Requires access token: no
+
 (GET)    Get all drones:                  "/drones"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get all drones sorted by serial: "/drones/sort/serialnumber"
+Data inputs: 
+Requires access token: no
+
 (GET)    Get all drones sorted by name:   "/drones/sort/name"
+Data inputs: 
+Requires access token: no
+
 (DELETE) Delete user with ID:             "/user/<int:user_id>"
+Data inputs: 
+Requires access token: yes
+
 (DELETE) Delete camera with model:        "/camera/<model>"
+Data inputs: 
+Requires access token: yes
+
 (DELETE) Delete drone with serial:        "/drone/serial/<int:serial_number>"
+Data inputs: 
+Requires access token: yes
 ```
 
 ## Decisions taken

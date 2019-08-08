@@ -186,8 +186,7 @@ def register_drone(hostname, port, serial_number, name, brand, cameras, access_t
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param serial_number:
-    :type serial_number:
+    :param serial_number: drone serial number (int)
     :param name: drone name
     :param brand: drone brand
     :param cameras: drone cameras

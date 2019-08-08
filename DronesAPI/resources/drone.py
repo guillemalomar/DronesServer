@@ -35,6 +35,7 @@ _drone_parser.add_argument(
 
 class DroneBySerial(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get(serial_number):
         """
         Static method that fetches and returns the drone entry with a specific serial number
@@ -80,6 +81,7 @@ class DroneBySerial(Resource):
 
 class DroneByName(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get(name):
         """
         Static method that fetches and returns the drone entries with a specific name
@@ -101,6 +103,7 @@ class DroneByName(Resource):
 
 class Drones(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all drones
@@ -121,6 +124,7 @@ class Drones(Resource):
 
 class DronesByName(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all drones, sorted by name
@@ -141,6 +145,7 @@ class DronesByName(Resource):
 
 class DronesBySerialnumber(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all drones, sorted by serial number

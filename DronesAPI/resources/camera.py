@@ -28,6 +28,7 @@ _drone_parser.add_argument(
 
 class Camera(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get(model):
         """
         Static method that fetches and returns the camera entry with a specific model
@@ -74,6 +75,7 @@ class Camera(Resource):
 
 class Cameras(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all cameras
@@ -95,6 +97,7 @@ class Cameras(Resource):
 
 class CamerasByModel(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all cameras, sorted by model

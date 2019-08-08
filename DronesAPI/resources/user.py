@@ -41,6 +41,7 @@ _user_parser.add_argument(
 
 class User(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get(user_id):
         """
         Static method that fetches and returns the user entry with a specific id
@@ -109,6 +110,7 @@ class Users(Resource):
 
 class UsersByName(Resource):
     @staticmethod
+    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all users, sorted by name

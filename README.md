@@ -140,3 +140,4 @@ I don't think this would have to store and deliver enough data to justify having
 - Future work
 
 This is just a first stage of the application. There are many things that can be improved. The logs aren't really specific; it lacks tests; monitoring could be useful in the future when there will be much more data... But I think that the result is quite satisfactory with the amount of dedicated time.
+Edit: I'm talking about monitoring such as Kibana, where we can get some semantic information from data. Monitoring such as Nagios would be needed, as we need to know at all time if the service is up and if it's performing well (even if it's an internal API, it can be part of a 'bigger wheel' where it might be supporting an external application).

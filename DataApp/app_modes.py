@@ -31,7 +31,10 @@ def get_drones(hostname, port, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
 def get_cameras(hostname, port, access_token):
@@ -47,23 +50,22 @@ def get_cameras(hostname, port, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
-def get_user_by_id(hostname, port, user_id, access_token):
+def get_user_by_id(hostname, port, user_id):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
     :param user_id: user id
-    :param access_token: current user token
     """
     logging.debug('get_user_by_id method called')
     print("------------------ DATABASE USERS ------------------")
-    r = requests.get("http://{}:{}/user/{}".format(hostname, port, user_id),
-                     headers={
-                         'authorization': 'Bearer ' + access_token
-                     })
+    r = requests.get("http://{}:{}/user/{}".format(hostname, port, user_id))
     print(r.content.decode("utf-8"))
 
 
@@ -81,7 +83,10 @@ def get_drone_by_serialnumber(hostname, port, serial_number, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
 def get_camera_by_model(hostname, port, model, access_token):
@@ -98,22 +103,21 @@ def get_camera_by_model(hostname, port, model, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
-def sort_users_by_name(hostname, port, access_token):
+def sort_users_by_name(hostname, port):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
-    :param access_token: current user token
     """
     logging.debug('sort_users_by_name method called')
     print("------------------ DATABASE USERS ------------------")
-    r = requests.get("http://{}:{}/users/sort/name".format(hostname, port),
-                     headers={
-                         'authorization': 'Bearer ' + access_token
-                     })
+    r = requests.get("http://{}:{}/users/sort/name".format(hostname, port))
     print(r.content.decode("utf-8"))
 
 
@@ -130,7 +134,10 @@ def sort_drones_by_serialnumber(hostname, port, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
 def sort_drones_by_name(hostname, port, access_token):
@@ -146,7 +153,10 @@ def sort_drones_by_name(hostname, port, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
 def get_cameras_by_model(hostname, port, access_token):
@@ -162,7 +172,10 @@ def get_cameras_by_model(hostname, port, access_token):
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
-    print(r.content.decode("utf-8"))
+    if r.status_code == 200:
+        print(r.content.decode("utf-8"))
+    else:
+        print("Error obtaining the information. Is there information? Are you logged in?")
 
 
 def register_user(hostname, port, user, password, team, access_token):
@@ -189,7 +202,7 @@ def register_user(hostname, port, user, password, team, access_token):
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to register the user")
+        print("Error trying to register the user. Are you logged in as a Support user?")
 
 
 def register_admin_user(hostname, port, user, password, team, secret_key):
@@ -214,7 +227,7 @@ def register_admin_user(hostname, port, user, password, team, secret_key):
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to register admin user")
+        print("Error trying to register admin user. Are you using a correct key?")
 
 
 def register_drone(hostname, port, serial_number, name, brand, cameras, access_token):
@@ -243,7 +256,7 @@ def register_drone(hostname, port, serial_number, name, brand, cameras, access_t
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to register the drone")
+        print("Error trying to register the drone. Are you logged in as a Support user?")
 
 
 def register_camera(hostname, port, model, megapixels, brand, access_token):
@@ -270,7 +283,7 @@ def register_camera(hostname, port, model, megapixels, brand, access_token):
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to register the camera")
+        print("Error trying to register the camera. Are you logged in as a Support user?")
 
 
 def delete_user(hostname, port, user_id, access_token):
@@ -290,7 +303,7 @@ def delete_user(hostname, port, user_id, access_token):
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to delete the user")
+        print("Error trying to delete the user. Are you logged in as a Support user?")
 
 
 def delete_drone(hostname, port, serial_number, access_token):
@@ -310,7 +323,7 @@ def delete_drone(hostname, port, serial_number, access_token):
     if r.status_code == 200:
         print(r.content.decode("utf-8"))
     else:
-        print("Error trying to delete the drone")
+        print("Error trying to delete the drone. Are you logged in as a Support user?")
 
 
 def delete_camera(hostname, port, model, access_token):
@@ -330,7 +343,7 @@ def delete_camera(hostname, port, model, access_token):
     if r.status_code == 200:
         print(json.loads(r.content.decode("utf-8"))['message'])
     else:
-        print("Error trying to delete the camera")
+        print("Error trying to delete the camera. Are you logged in as a Support user?")
 
 
 def user_login(hostname, port, user, password):
@@ -353,7 +366,7 @@ def user_login(hostname, port, user, password):
     if r.status_code == 200:
         return json.loads(r.content.decode("utf-8"))['access_token']
     else:
-        return None
+        return g
 
 
 def fill_database(hostname, port, access_token, data_file):
@@ -382,7 +395,7 @@ def fill_database(hostname, port, access_token, data_file):
             if r.status_code == 200:
                 print("Cameras data loaded")
         else:
-            print("Cameras data not loaded. Maybe you have to login first.")
+            print("Cameras data not loaded. Maybe you have to login first as a Support member.")
 
     with open(data_file) as json_file:
         data = json.load(json_file)
@@ -402,4 +415,4 @@ def fill_database(hostname, port, access_token, data_file):
             if r.status_code == 200:
                 print("Drones data loaded")
         else:
-            print("Drones data not loaded. Maybe you have to login first.")
+            print("Drones data not loaded. Maybe you have to login first as a Support member.")

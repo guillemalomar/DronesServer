@@ -144,7 +144,7 @@ if __name__ == "__main__":
             app_modes.get_cameras(hostname, port, access_token)
         elif var == '4':
             user_id = input("Please, en1ter a user id: ")
-            app_modes.get_user_by_id(hostname, port, user_id, access_token)
+            app_modes.get_user_by_id(hostname, port, user_id)
         elif var == '5':
             serial_number = input("Please, enter a drone serial number: ")
             app_modes.get_drone_by_serialnumber(hostname, port, serial_number, access_token)
@@ -152,7 +152,7 @@ if __name__ == "__main__":
             model = input("Please, enter a camera model: ")
             app_modes.get_camera_by_model(hostname, port, model, access_token)
         elif var == '7':
-            app_modes.sort_users_by_name(hostname, port, access_token)
+            app_modes.sort_users_by_name(hostname, port)
         elif var == '8':
             app_modes.sort_drones_by_serialnumber(hostname, port, access_token)
         elif var == '9':
@@ -162,7 +162,7 @@ if __name__ == "__main__":
         elif var == '11':
             user = "Tony"
             password = "tonypass"
-            team = "Developer"
+            team = "Development"
             app_modes.register_user(hostname, port, user, password, team, access_token)
         elif var == '12':
             user = "Guillem"

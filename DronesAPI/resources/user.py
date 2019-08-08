@@ -9,6 +9,7 @@ from flask_jwt_extended import create_access_token,\
 
 from DronesAPI.models.user import UserModel
 from DronesAPI.creds import ADMIN_SECRET_KEY
+from DronesAPI.settings import POSSIBLE_TEAMS
 
 import hashlib
 
@@ -143,9 +144,15 @@ class UserAdminRegister(Resource):
                            "message": "User already exists"
                        }, 400
 
+            if data['team'] != 'Support':
+                logging.info("User team not correct. This command is to create Support members.")
+                return {
+                           "message": "User team not correct. This command is to create Support members."
+                       }, 400
+
             user = UserModel(data["username"],
                              hashlib.sha256(data["password"].encode("utf-8")).hexdigest(),
-                             data['team'])
+                             'Support')
             user.save_to_db()
             logging.info("User {} created".format(data["username"]))
             return {
@@ -176,6 +183,14 @@ class UserRegister(Resource):
                     logging.info("User already exists")
                     return {
                                "message": "User already exists"
+                           }, 400
+
+                if data['team'] not in POSSIBLE_TEAMS:
+                    logging.info("User team not correct. It has to be one of the following ones:" +
+                                 ', '.join(POSSIBLE_TEAMS))
+                    return {
+                               "message": "User team not correct. It has to be one of the following ones:" +
+                                          ', '.join(POSSIBLE_TEAMS)
                            }, 400
 
                 user = UserModel(data["username"],

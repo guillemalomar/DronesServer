@@ -18,114 +18,150 @@ def get_users(hostname, port):
     print(r.content.decode("utf-8"))
 
 
-def get_drones(hostname, port):
+def get_drones(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('get_drones method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drones".format(hostname, port))
+    r = requests.get("http://{}:{}/drones".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def get_cameras(hostname, port):
+def get_cameras(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('get_cameras method called')
     print("------------------ DATABASE CAMERAS ------------------")
-    r = requests.get("http://{}:{}/cameras".format(hostname, port))
+    r = requests.get("http://{}:{}/cameras".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def get_user_by_id(hostname, port, user_id):
+def get_user_by_id(hostname, port, user_id, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
     :param user_id: user id
+    :param access_token: current user token
     """
     logging.debug('get_user_by_id method called')
     print("------------------ DATABASE USERS ------------------")
-    r = requests.get("http://{}:{}/user/{}".format(hostname, port, user_id))
+    r = requests.get("http://{}:{}/user/{}".format(hostname, port, user_id),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def get_drone_by_serialnumber(hostname, port, serial_number):
+def get_drone_by_serialnumber(hostname, port, serial_number, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
     :param serial_number: drone serial_number
+    :param access_token: current user token
     """
     logging.debug('get_drones_by_serialnumber method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drone/serial/{}".format(hostname, port, serial_number))
+    r = requests.get("http://{}:{}/drone/serial/{}".format(hostname, port, serial_number),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def get_camera_by_model(hostname, port, model):
+def get_camera_by_model(hostname, port, model, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
     :param model: camera model
+    :param access_token: current user token
     """
     logging.debug('get_cameras_by_model method called')
     print("------------------ DATABASE CAMERAS ------------------")
-    r = requests.get("http://{}:{}/camera/{}".format(hostname, port, model))
+    r = requests.get("http://{}:{}/camera/{}".format(hostname, port, model),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def sort_users_by_name(hostname, port):
+def sort_users_by_name(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('sort_users_by_name method called')
     print("------------------ DATABASE USERS ------------------")
-    r = requests.get("http://{}:{}/users/sort/name".format(hostname, port))
+    r = requests.get("http://{}:{}/users/sort/name".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def sort_drones_by_serialnumber(hostname, port):
+def sort_drones_by_serialnumber(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('sort_drones_by_serialnumber method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drones/sort/serialnumber".format(hostname, port))
+    r = requests.get("http://{}:{}/drones/sort/serialnumber".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def sort_drones_by_name(hostname, port):
+def sort_drones_by_name(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('sort_drones_by_name method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drones/sort/name".format(hostname, port))
+    r = requests.get("http://{}:{}/drones/sort/name".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 
-def get_cameras_by_model(hostname, port):
+def get_cameras_by_model(hostname, port, access_token):
     """
     Show the top10 pages, by points
     :param hostname: server location
     :param port: server port
+    :param access_token: current user token
     """
     logging.debug('get_cameras_by_model method called')
     print("------------------ DATABASE CAMERAS ------------------")
-    r = requests.get("http://{}:{}/cameras/sort/model".format(hostname, port))
+    r = requests.get("http://{}:{}/cameras/sort/model".format(hostname, port),
+                     headers={
+                         'authorization': 'Bearer ' + access_token
+                     })
     print(r.content.decode("utf-8"))
 
 

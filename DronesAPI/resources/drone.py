@@ -51,8 +51,9 @@ class DroneBySerial(Resource):
                    "message": "Drone not found"
                }, 404
 
+    @staticmethod
     @fresh_jwt_required
-    def delete(self, serial_number):
+    def delete(serial_number):
         """
         Static method that fetches and deletes the drone entry with a specific serial number.
         Can only be done if the user logged in is a support team user.
@@ -166,8 +167,9 @@ class DronesBySerialnumber(Resource):
 
 class DroneRegister(Resource):
 
+    @staticmethod
     @fresh_jwt_required
-    def post(self):
+    def post():
         """
         Method saves a new drone.
         Can only be done if the user logged in is a support team user.

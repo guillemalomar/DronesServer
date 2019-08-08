@@ -41,7 +41,6 @@ _user_parser.add_argument(
 
 class User(Resource):
     @staticmethod
-    @fresh_jwt_required
     def get(user_id):
         """
         Static method that fetches and returns the user entry with a specific id
@@ -58,8 +57,9 @@ class User(Resource):
                    "message": "User not found"
                }, 404
 
+    @staticmethod
     @fresh_jwt_required
-    def delete(self, user_id):
+    def delete(user_id):
         """
         Static method that fetches and deletes the user entry with a specific id.
         Can only be done if the user logged in is a support team user.
@@ -110,7 +110,6 @@ class Users(Resource):
 
 class UsersByName(Resource):
     @staticmethod
-    @fresh_jwt_required
     def get():
         """
         Static method that fetches and returns all users, sorted by name

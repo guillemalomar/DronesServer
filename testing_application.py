@@ -1,10 +1,12 @@
 import argparse
 
 from DataApp import app_modes
+from DataApp.creds import ADMIN_SECRET_KEY
 
-access_token = "NotObtainedYet"
+# Initial access token, wrong
+access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjUxNTU1MTksIm5iZiI6MTU2NTE1NTUxOSwianRpIjoiOTlkYzRlZjEtMjE0NS00ZGViLTg5NmUtNGZkMWY4YmFhMzhhIiwiZXhwIjoxNTY1MTU2NDE5LCJpZGVudGl0eSI6MSwiZnJlc2giOnRydWUsInR5cGUiOiJhY2Nlc3MifQ.Mi_O3UvOolfG2OfgPKsYv_V3F-GM2FGEsaDmcEW1kHo"
 
-admin_secret_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjUxNTU1MTksIm5iZiI6MTU2NTE1NTUxOSwianRpIjoiOTlkYzRlZjEtMjE0NS00ZGViLTg5NmUtNGZkMWY4YmFhMzhhIiwiZXhwIjoxNTY1MTU2NDE5LCJpZGVudGl0eSI6MSwiZnJlc2giOnRydWUsInR5cGUiOiJhY2Nlc3MifQ.Mi_O3UvOolfG2OfgPKsYv_V3F-GM2FGEsaDmcEW1kHo'
+admin_secret_key = ADMIN_SECRET_KEY
 
 
 def clean_screen():
@@ -137,37 +139,36 @@ if __name__ == "__main__":
         elif var == '1':
             app_modes.get_users(hostname, port)
         elif var == '2':
-            app_modes.get_drones(hostname, port)
+            app_modes.get_drones(hostname, port, access_token)
         elif var == '3':
-            app_modes.get_cameras(hostname, port)
+            app_modes.get_cameras(hostname, port, access_token)
         elif var == '4':
             user_id = input("Please, en1ter a user id: ")
-            app_modes.get_user_by_id(hostname, port, user_id)
+            app_modes.get_user_by_id(hostname, port, user_id, access_token)
         elif var == '5':
             serial_number = input("Please, enter a drone serial number: ")
-            app_modes.get_drone_by_serialnumber(hostname, port, serial_number)
+            app_modes.get_drone_by_serialnumber(hostname, port, serial_number, access_token)
         elif var == '6':
             model = input("Please, enter a camera model: ")
-            app_modes.get_camera_by_model(hostname, port, model)
+            app_modes.get_camera_by_model(hostname, port, model, access_token)
         elif var == '7':
-            app_modes.sort_users_by_name(hostname, port)
+            app_modes.sort_users_by_name(hostname, port, access_token)
         elif var == '8':
-            app_modes.sort_drones_by_serialnumber(hostname, port)
+            app_modes.sort_drones_by_serialnumber(hostname, port, access_token)
         elif var == '9':
-            app_modes.sort_drones_by_name(hostname, port)
+            app_modes.sort_drones_by_name(hostname, port, access_token)
         elif var == '10':
-            app_modes.get_cameras_by_model(hostname, port)
+            app_modes.get_cameras_by_model(hostname, port, access_token)
         elif var == '11':
             user = "Tony"
             password = "tonypass"
             team = "Developer"
-            secret_key = admin_secret_key
             app_modes.register_user(hostname, port, user, password, team, access_token)
         elif var == '12':
             user = "Guillem"
             password = "guillempass"
             team = "Support"
-            secret_key = admin_secret_key
+            secret_key = ADMIN_SECRET_KEY
             app_modes.register_admin_user(hostname, port, user, password, team, secret_key)
         elif var == '13':
             serial_number = input("Please, enter a drone serial number: ")

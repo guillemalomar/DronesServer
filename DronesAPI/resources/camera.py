@@ -119,8 +119,9 @@ class CamerasByModel(Resource):
 
 class CameraRegister(Resource):
 
+    @staticmethod
     @fresh_jwt_required
-    def post(self):
+    def post():
         """
         Method saves a new camera.
         Can only be done if the user logged in is a support team user.

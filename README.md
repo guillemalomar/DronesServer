@@ -39,11 +39,16 @@ The complete list of packages is available in the file _requirements.txt_
 
 - Installation
 
-I recommend creating a virtualenv for this project. After creating it and activating it, you should run:
+I recommend creating a virtualenv for this project:
 ```
+# Create the virtual environment
 ~/DronesAPI$ virtualenv -p python3 venv
+
+# Activate it
 ~/DronesAPI$ source venv/bin/activate
-~/DronesAPI$ pip install -r requirements.txt
+
+# Install the pip packages from the requirements file
+~/DronesAPI$ (venv) pip install -r requirements.txt
 ```
 Now all pip packages needed have been installed.
 

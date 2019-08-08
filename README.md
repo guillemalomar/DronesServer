@@ -122,35 +122,35 @@ Requires access token: no
 
 (GET)    Get camera with model:           "/camera/<model>"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get all cameras:                 "/cameras"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get all cameras sorted by model: "/cameras/sort/model"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get drone with serial:           "/drone/serial/<int:serial_number>"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get drone with name:             "/drone/name/<name>"
 Data inputs:
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get all drones:                  "/drones"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get all drones sorted by serial: "/drones/sort/serialnumber"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (GET)    Get all drones sorted by name:   "/drones/sort/name"
 Data inputs: 
-Requires access token: no
+Requires access token: yes
 
 (DELETE) Delete user with ID:             "/user/<int:user_id>"
 Data inputs: 

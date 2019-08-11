@@ -112,11 +112,11 @@ Requires access token: yes
 Data inputs:
 Requires access token: no
 
-(GET)    Get all users:                   "/users"
+(GET)    Get all users:                   "/user"
 Data inputs: 
 Requires access token: no
 
-(GET)    Get all users sorted by name:    "/users/sort/name"
+(GET)    Get all users sorted by name:    "/user/sort/name"
 Data inputs: 
 Requires access token: no
 
@@ -124,11 +124,11 @@ Requires access token: no
 Data inputs: 
 Requires access token: yes
 
-(GET)    Get all cameras:                 "/cameras"
+(GET)    Get all cameras:                 "/camera"
 Data inputs: 
 Requires access token: yes
 
-(GET)    Get all cameras sorted by model: "/cameras/sort/model"
+(GET)    Get all cameras sorted by model: "/camera/sort/model"
 Data inputs: 
 Requires access token: yes
 
@@ -140,15 +140,15 @@ Requires access token: yes
 Data inputs:
 Requires access token: yes
 
-(GET)    Get all drones:                  "/drones"
+(GET)    Get all drones:                  "/drone"
 Data inputs: 
 Requires access token: yes
 
-(GET)    Get all drones sorted by serial: "/drones/sort/serialnumber"
+(GET)    Get all drones sorted by serial: "/drone/sort/serialnumber"
 Data inputs: 
 Requires access token: yes
 
-(GET)    Get all drones sorted by name:   "/drones/sort/name"
+(GET)    Get all drones sorted by name:   "/drone/sort/name"
 Data inputs: 
 Requires access token: yes
 

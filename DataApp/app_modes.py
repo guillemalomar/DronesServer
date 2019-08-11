@@ -46,7 +46,7 @@ def get_cameras(hostname, port, access_token):
     """
     logging.debug('get_cameras method called')
     print("------------------ DATABASE CAMERAS ------------------")
-    r = requests.get("http://{}:{}/cameras".format(hostname, port),
+    r = requests.get("http://{}:{}/camera".format(hostname, port),
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
@@ -117,7 +117,7 @@ def sort_users_by_name(hostname, port):
     """
     logging.debug('sort_users_by_name method called')
     print("------------------ DATABASE USERS ------------------")
-    r = requests.get("http://{}:{}/users/sort/name".format(hostname, port))
+    r = requests.get("http://{}:{}/user/sort/name".format(hostname, port))
     print(r.content.decode("utf-8"))
 
 
@@ -130,7 +130,7 @@ def sort_drones_by_serialnumber(hostname, port, access_token):
     """
     logging.debug('sort_drones_by_serialnumber method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drones/sort/serialnumber".format(hostname, port),
+    r = requests.get("http://{}:{}/drone/sort/serialnumber".format(hostname, port),
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
@@ -149,7 +149,7 @@ def sort_drones_by_name(hostname, port, access_token):
     """
     logging.debug('sort_drones_by_name method called')
     print("------------------ DATABASE DRONES ------------------")
-    r = requests.get("http://{}:{}/drones/sort/name".format(hostname, port),
+    r = requests.get("http://{}:{}/drone/sort/name".format(hostname, port),
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })
@@ -168,7 +168,7 @@ def get_cameras_by_model(hostname, port, access_token):
     """
     logging.debug('get_cameras_by_model method called')
     print("------------------ DATABASE CAMERAS ------------------")
-    r = requests.get("http://{}:{}/cameras/sort/model".format(hostname, port),
+    r = requests.get("http://{}:{}/camera/sort/model".format(hostname, port),
                      headers={
                          'authorization': 'Bearer ' + access_token
                      })

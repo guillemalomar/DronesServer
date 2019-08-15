@@ -63,7 +63,7 @@ First of all, the user should start by running the server with Gunicorn. This is
 (venv) ~/DronesAPI$ gunicorn -w 4 -b 127.0.0.1:5000 rest_api:app
 ```
 
-If this has worked correctly, this should be the output:`
+If this has worked correctly, this should be the output:
 ```
 [2019-08-07 12:40:22 +0800] [51020] [INFO] Starting gunicorn 19.9.0
 [2019-08-07 12:40:22 +0800] [51020] [INFO] Listening at: http://127.0.0.1:5000 (51020)
@@ -165,18 +165,34 @@ Data inputs:
 Requires access token: yes
 ```
 
+## Exercise specifications
+
+"We have prepared this small exercise for you. The goal is for us to evaluate your experience in building code that is meant to be run in a production environment. Please do not spend more than 4 hours on the test (it’s not going to be worth your time). If at the end of the time allocated, you feel that you are missing things, just tell us what you feel you should have done, where your application is lacking, etc...
+
+You should consider that it’s your first day at the company. You are a member of a backend team, and you get your first assignment to implement a new feature running in an internal server. The functionality needs to be implemented in Python. Feel free to use any tool you find interesting to build this application (Django, Flask...).
+
+Remember also that you are interviewing for a backend position. Our front end is done in Angular by another team. Don’t hesitate to make some choices accordingly. You can justify them if you want in a text file or in your response email but keep in mind that there is no need to implement the front-end of the application.
+
+A company needs to implement a small web application for the inventory of its drones and cameras. The application will include the following features:
+
+1. A web page to register a new drone. Whenever a new drone arrives to the company, someone from the support team will use the feature to register it by adding all the needed data. This should include at least: name, brand, serial number, different type of supported cameras (ex: phantom, DJI, x4303,hero3). The camera’s main parameters are the model, megapixel number and the brand (ex: hero3, 12MP,gopro).
+
+2. A web page to see the list of drones registered. In this page, it could also help to have some kind of filtering (e.g. by name, brand, camera megapixel, etc) as well as the ability to change the order of the results.
+
+Keep in mind that all users can read the list of drones but only the members from the support team can add new drones to the list.
+
 ## Decisions taken
 
-To do this project I followed some basic instructions, but the specific components and architecture had to be chosen by me.
+To do this project I followed some basic instructions, but the specific components and architecture had to be chosen by me. The following is an explanation of some of the decisions that I took.
 
 ### Authentication system
 This wasn't the first time I implemented a RESTful API (see [RedditCrawler](https://github.com/guillemalomar/RedditCrawler), [SongsPlatform](https://github.com/guillemalomar/SongsPlatform)), and neither that I used a SQL database. But it was the first time that I used any type of authentication system. I had worked with Flask before but always at internal level, where no user profiles were needed.
 
 ### Database
-When choosing the database I decided to use SQL Alchemy after also pondering about MongoDB (which I know from doing some MongoUniversity courses, and tinkering with it for one of my projects: [GeneticAlgorithm](https://github.com/guillemalomar/GeneticAlgorithm)). I decided to use the first one because it's the one that fits better with Flask, and for this project I didn't have enough time to implement the MongoDB connection (maybe with a few more hours). For production scale, SQL Alchemy wouldn't even be an option. Mongo would also be a good option because it can graph geolocation data, and drones are quite related to that.
+When choosing the database I decided to use SQL Alchemy after also pondering about MongoDB (which I know from doing some MongoUniversity courses, and tinkering with it for one of my projects: [GeneticAlgorithm](https://github.com/guillemalomar/GeneticAlgorithm)). I decided to use the first one because it's the one that fits better with Flask, and for this project I didn't have enough time to implement the MongoDB connection (maybe with a few more hours). For production scale, SQL Alchemy could be an option if it was single server and not much data would be stored in it. A good think about Mongo is that it can graph geolocation data, and drones are quite related to that.
 
 ### User registration
-Currently, only users from the Support team can execute commands that involve registering new drones and cameras, and deleting users, drones and cameras. Also, support users can only be created by using a specific key. This key can be specified in the _creds.py_ file (which I haven't added to the project, as credentials should never be uploaded to online repositories). I don't know if this would be the best way to do this, but i think it's a safe way, as this way the users with more power can be created safely, and other types of users will never be able to create users (which makes sense to me).
+Currently, only users from the Support team can execute commands that involve registering new drones and cameras, and deleting users, drones and cameras. Also, support users can only be created by using a specific key. This key can be specified in the _creds.py_ file (which I haven't added to the project, as credentials should never be uploaded to online repositories). I don't know if this would be the best way to do this, but i think it's a safe way, as this way the users with more power can be created safely, and other types of users will never be able to create users (which makes sense to me). Another thing that I have done that wasn't specified is to leave the methods to obtain the users information open, as this way a user can directly know if it has been registered, which is quite convenient.
 
 ### Drone registration and cameras data
 There is a thing that I had to consider when modeling the API data. Drones contain a list of possible cameras. I decided to create another table only for cameras data. This way, whenever a drone has to be registered, the API checks if all the drones specified camera models exist as a registered camera, and otherwise it will not register the drone. This way I can also easily obtain the cameras information without having to check all drones (which I guess would be stored in a much bigger table).
@@ -192,9 +208,6 @@ I have previously deployed this kind of servers using Jenkins, and it's what I w
 I don't think this would have to store and deliver enough data to justify having a QA deployment for testing. The methods would be also quite fixed, from the specifications it doesn't seem that it would change often.
 
 ### Future work
-This is just a first stage of the application. There are many things that can be improved. The logs aren't really specific; it lacks tests; monitoring could be useful in the future when there will be much more data... But I think that the result is quite satisfactory with the amount of dedicated time.
-Edit: I'm talking about monitoring such as Kibana, where we can get some semantic information from data. Monitoring such as Nagios would be needed, as we need to know at all time if the service is up and if it's performing well (even if it's an internal API, it can be part of a 'bigger wheel' where it might be supporting an external application).
+This is just a first stage of the application. There are many things that can be improved. The logs aren't really specific; it lacks tests; data analysis to obtain semantic information using tools such as Kibana could be useful in the future when there will be much more data. Monitoring such as Nagios would be needed for sure, as we need to know at all time if the service is up and if it's performing well (even if it's an internal API, it can be part of a 'bigger wheel' where it might be supporting an external application).
 
-- Last changes:
-
-I just made some last changes to the code. While thinking about it, it made no sense to me that all users could access the information, but only Support team users could add information. Why have other teams login for that? So I supposed that the exercise was referring to logged in users when it said that "... all users can read the list of drones but only the members from the support team can add new drones to the list". But what I have done that wasn't specified is to leave the methods to obtain the users information open, as this way a user can directly know if it has been registered, which is quite convenient.
+Overall I think that the result is quite satisfactory with the amount of time spent in the project.

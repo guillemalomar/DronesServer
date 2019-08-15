@@ -15,6 +15,7 @@
     * [Running the server](#running-the-server)
     * [Executing the client application](#executing-the-client-application)
 * [Endpoints](#endpoints)
+* [Exercise specifications](#exercise-specifications)
 * [Decisions taken](#decisions-taken)
 
 ## Documentation
